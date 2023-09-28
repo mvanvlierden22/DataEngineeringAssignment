@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  yolov8:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    shm_size: '8gb'
+    restart: always
+    volumes:
+      - ./:/app
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
