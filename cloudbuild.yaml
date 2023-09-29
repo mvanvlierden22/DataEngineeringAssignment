@@ -2,5 +2,7 @@
 steps:
   - name: "gcr.io/cloud-builders/docker"
     args: ["compose", "-f", "yolov8_api/docker-compose.yml", "build"]
+    env:
+      - "POTREE_API_TOKEN=${_POTREE_API_TOKEN}"
 images:
   - "europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-image:tag1"
