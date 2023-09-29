@@ -1,18 +1,17 @@
 version: "3.9"
 
 services:
-  api:
-    image: 'europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-api-image:tag1'
+  training:
+    image: 'europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-training-image:tag1'
     build:
       context: .
       dockerfile: Dockerfile
     shm_size: '8gb'
     restart: always
-    env_file: .env
-    ports:
-      - "5000:5000"
     volumes:
       - ./:/app
+    ports:
+      - "5000:5000"
     deploy:
       resources:
         reservations:
