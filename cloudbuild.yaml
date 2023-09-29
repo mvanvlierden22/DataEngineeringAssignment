@@ -1,6 +1,6 @@
 #cloudbuild.yaml
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['compose', '-f', 'DockerizeYolo/docker-compose.yml', 'build']
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["compose", "-f", "yolov8_api/docker-compose.yml", "build"]
 images:
-- 'europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-image:tag1'
+  - "europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-image:tag1"
