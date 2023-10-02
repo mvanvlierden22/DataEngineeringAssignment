@@ -2,5 +2,29 @@
 steps:
   - name: "gcr.io/cloud-builders/docker"
     args: ["compose", "-f", "yolov8_api/docker-compose.yml", "build"]
-    env:
-      - "POTREE_API_TOKEN=${_POTREE_API_TOKEN}"
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["compose", "-f", "yolov8_api/docker-compose.yml", "push"]
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "gcloud"
+    args:
+      [
+        "run",
+        "deploy",
+        "yolov8_api",
+        "--image",
+        "europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-image:tag1",
+        "--region",
+        "europe-west1",
+        "--platform",
+        "managed",
+        "--port",
+        "5000",
+        "--cpu",
+        "2",
+        "--memory",
+        "4G",
+        "--allow-unauthenticated",
+        "--update-env-vars",
+        "PROJECT_ID=$PROJECT_ID,MODEL_REPO=models_de2023,MODEL_NAME=model.h5,POTREE_API_TOKEN=${_POTREE_API_TOKEN}",
+        "--no-cpu-throttling",
+      ]
