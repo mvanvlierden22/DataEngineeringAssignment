@@ -4,6 +4,3 @@ steps:
     args: ["compose", "-f", "yolov8_api/docker-compose.yml", "build"]
     env:
       - "POTREE_API_TOKEN=${_POTREE_API_TOKEN}"
-      - "TAG_NAME=${TAG_NAME}"
-images:
-  - ${TAG_NAME}
