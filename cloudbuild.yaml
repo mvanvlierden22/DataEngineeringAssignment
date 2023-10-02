@@ -10,7 +10,7 @@ steps:
       [
         "run",
         "deploy",
-        "yolov8_api",
+        "api",
         "--image",
         "europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-image:tag1",
         "--region",
