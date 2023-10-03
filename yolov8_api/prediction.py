@@ -61,7 +61,7 @@ async def custom_swagger_ui_html(req: Request):
 
 @app.post("/detect")
 async def detect(file: UploadFile):
-    path = f"/app/tmp/{file.filename}"
+    path = f"/api/tmp/{file.filename}"
     with open(path, "wb") as f:
         contents = await file.read()
         f.write(contents)

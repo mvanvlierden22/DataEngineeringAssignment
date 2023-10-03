@@ -12,6 +12,8 @@ services:
       POTREE_API_TOKEN: ${POTREE_API_TOKEN}
     ports:
       - "5000:5000"
+    volumes:
+      - api-volume:/app
     deploy:
       resources:
         reservations:
@@ -19,3 +21,7 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+
+
+volumes:
+  api-volume:
