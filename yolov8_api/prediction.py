@@ -20,7 +20,7 @@ app = FastAPI()
 api_key = os.getenv("POTREE_API_TOKEN")
 
 # load a pretrained model for inference (will be replaced by trained models when training pipeline has been set up )
-model = YOLO("yolov8s.pt")
+model = YOLO("yolov8n.pt")
 
 
 @app.middleware("http")
@@ -61,7 +61,7 @@ async def custom_swagger_ui_html(req: Request):
 
 @app.post("/detect")
 async def detect(file: UploadFile):
-    path = f"/app/tmp/{file.filename}"
+    path = f"/api/tmp/{file.filename}"
     with open(path, "wb") as f:
         contents = await file.read()
         f.write(contents)

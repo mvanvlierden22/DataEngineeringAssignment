@@ -13,7 +13,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./:/app
+      - api-volume:/app
     deploy:
       resources:
         reservations:
@@ -21,3 +21,7 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+
+
+volumes:
+  api-volume:
