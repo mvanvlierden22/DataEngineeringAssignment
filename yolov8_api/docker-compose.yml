@@ -12,8 +12,6 @@ services:
       POTREE_API_TOKEN: ${POTREE_API_TOKEN}
     ports:
       - "5000:5000"
-    volumes:
-      - ./:/app
     deploy:
       resources:
         reservations:
