@@ -6,6 +6,8 @@ steps:
       - "LOCATION=$LOCATION"
       - "PROJECT_ID=$PROJECT_ID"
       - "TAG_NAME=$TAG_NAME"
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["compose", "-f", "yolov8_api/docker-compose.yml", "push"]
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
     args:
