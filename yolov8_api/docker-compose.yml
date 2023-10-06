@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   api:
-    image: "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}"
+    image: "${_LOCATION}-docker.pkg.dev/${_PROJECT_ID}/docker-image-repo/yolov8-image:${_TAG_NAME}"
     build:
       context: .
       dockerfile: Dockerfile
