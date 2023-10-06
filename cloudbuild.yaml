@@ -14,7 +14,7 @@ steps:
         "deploy",
         "api",
         "--image",
-        "europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-image:tag1",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}",
         "--region",
         "europe-west1",
         "--platform",
