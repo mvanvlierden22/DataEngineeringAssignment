@@ -4,8 +4,10 @@ from google.cloud import storage
 import shutil
 
 
-def train_yolo(project_id, dataset_path, model_repo):
+def train_yolo(project_id, data_bucket, model_repo):
     model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
+
+    dataset_path = data_bucket + "/data.yaml"
     model.train(data=dataset_path, epochs=3, name="yolov8n_custom")
 
     local_file = "runs/detect/yolov8n_custom/weights/best.pt"

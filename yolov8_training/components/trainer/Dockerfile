@@ -4,7 +4,7 @@ WORKDIR /pipelines/component/src
 ADD src/component.py ./
 
 RUN pip install torch torchvision torchaudio
-RUN pip install opencv-python matplotlib onnx Pillow ultralytics
+RUN pip install opencv-python matplotlib onnx Pillow ultralytics google-cloud-storage
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install ffmpeg libsm6 libxext6 curl -y
