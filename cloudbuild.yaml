@@ -17,6 +17,14 @@ steps:
       ]
 
   - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_trainer:${TAG_NAME}",
+        "./yolov8_training/components/trainer",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
     args: ["compose", "-f", "yolov8_api/docker-compose.yml", "push"]
     env:
       - "LOCATION=$LOCATION"
@@ -29,7 +37,6 @@ steps:
         "push",
         "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_trainer:${TAG_NAME}",
       ]
-
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
     args:
