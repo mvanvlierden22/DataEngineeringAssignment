@@ -25,7 +25,6 @@ def train_yolo(project_id, model_repo):
 def parse_command_line_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project_id", type=str, help="GCP project id")
-    parser.add_argument("--data_repo", type=str, help="CSV file with features")
     parser.add_argument("--model_repo", type=str, help="Name of the model bucket")
     args = parser.parse_args()
     return vars(args)
