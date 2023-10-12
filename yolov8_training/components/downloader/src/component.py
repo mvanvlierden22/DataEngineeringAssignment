@@ -30,6 +30,7 @@ def parse_command_line_arguments():
     parser.add_argument(
         "--file_name", type=str, help="Name of the training data set file name"
     )
+    parser.add_argument("--dataset_path", type=str, help="Path to dataset")
     args = parser.parse_args()
     return vars(
         args
