@@ -4,6 +4,7 @@ import logging
 from pathlib import Path
 import zipfile
 import argparse
+import os
 
 
 def download_data(project_id, data_bucket, file_name):
@@ -18,6 +19,8 @@ def download_data(project_id, data_bucket, file_name):
 
     with zipfile.ZipFile(file_name, "r") as zip_ref:
         zip_ref.extractall("./")
+
+    print([x[0] for x in os.walk("./")])
 
     logging.info("Downloaded and unzipped Data!")
 
