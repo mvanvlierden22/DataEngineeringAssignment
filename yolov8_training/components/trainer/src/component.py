@@ -4,6 +4,7 @@ from google.cloud import storage
 import shutil
 import os
 import zipfile
+import sys
 
 
 def train_yolo(project_id, dataset_path, model_repo):
@@ -14,8 +15,12 @@ def train_yolo(project_id, dataset_path, model_repo):
 
     print([x[0] for x in os.walk("./")])
 
-    path = "./data.yaml"
-    model.train(data=path, epochs=3, name="yolov8n_custom")
+    dataset_folder = os.path.splitext(dataset_path)[0]
+
+    sys.path.append(dataset_folder)
+
+    yaml = "./data.yaml"
+    model.train(data=yaml, epochs=3, name="yolov8n_custom")
 
     local_file = "runs/detect/yolov8n_custom/weights/best.pt"
     # Save to GCS
