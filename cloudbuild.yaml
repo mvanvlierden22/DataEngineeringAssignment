@@ -22,7 +22,7 @@ steps:
         "build",
         "-t",
         "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_downloader:${TAG_NAME}",
-        "./yolov8_training/components/trainer",
+        "./yolov8_training/components/downloader",
       ]
 
   - name: "gcr.io/cloud-builders/docker"
