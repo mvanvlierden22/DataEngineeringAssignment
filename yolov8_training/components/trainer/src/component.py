@@ -14,8 +14,8 @@ def train_yolo(project_id, dataset_path, model_repo):
 
     print([x[0] for x in os.walk("./")])
 
-    dataset_path = dataset_path + "/data.yaml"
-    model.train(data=dataset_path, epochs=50, name="yolov8n_custom")
+    path = "./new dataset 640x640/data.yaml"
+    model.train(data=path, epochs=3, name="yolov8n_custom")
 
     local_file = "runs/detect/yolov8n_custom/weights/best.pt"
     # Save to GCS
