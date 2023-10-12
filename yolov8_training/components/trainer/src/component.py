@@ -9,12 +9,12 @@ import zipfile
 def train_yolo(project_id, dataset_path, model_repo):
     model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
 
-    print([x[0] for x in os.walk("./")])
-
     with zipfile.ZipFile(dataset_path, "r") as zip_ref:
         zip_ref.extractall("./")
 
-    dataset_path = "./new dataset 640x640/data.yaml"
+    print([x[0] for x in os.walk("./")])
+
+    dataset_path = dataset_path + "/data.yaml"
     model.train(data=dataset_path, epochs=50, name="yolov8n_custom")
 
     local_file = "runs/detect/yolov8n_custom/weights/best.pt"
