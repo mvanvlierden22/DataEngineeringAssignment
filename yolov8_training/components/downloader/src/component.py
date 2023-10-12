@@ -7,22 +7,19 @@ import argparse
 import os
 
 
-def download_data(project_id, data_bucket, file_name):
+def download_data(project_id, data_bucket, file_name, dataset_path):
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
     client = storage.Client(project=project_id)
     bucket = client.get_bucket(data_bucket)
     blob = bucket.blob(file_name)
     # Creating the directory where the output file is created (the directory
     # may or may not exist).
-    Path(file_name).parent.mkdir(parents=True, exist_ok=True)
-    blob.download_to_filename(file_name)
-
-    with zipfile.ZipFile(file_name, "r") as zip_ref:
-        zip_ref.extractall("./")
+    Path(dataset_path).parent.mkdir(parents=True, exist_ok=True)
+    blob.download_to_filename(dataset_path)
 
     print([x[0] for x in os.walk("./")])
 
-    logging.info("Downloaded and unzipped Data!")
+    logging.info("Downloaded Data!")
 
 
 # Defining and parsing the command-line arguments
