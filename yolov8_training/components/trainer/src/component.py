@@ -2,11 +2,13 @@ from ultralytics import YOLO
 import argparse
 from google.cloud import storage
 import shutil
+import os
 
 
 def train_yolo(project_id, model_repo):
     model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
 
+    print([x[0] for x in os.walk("./")])
     dataset_path = "archive/new dataset 640x640/data.yaml"
     model.train(data=dataset_path, epochs=50, name="yolov8n_custom")
 
