@@ -15,7 +15,7 @@ def train_yolo(project_id, dataset_path, model_repo):
 
     print([x[0] for x in os.walk("./")])
 
-    dataset_folder = os.path.splitext(dataset_path)[0]
+    dataset_folder = "./obj_det_dataset"
 
     # Make sure yolo knows where to find dataset
     settings.update({"datasets_dir": dataset_folder})
