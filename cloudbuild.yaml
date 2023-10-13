@@ -52,9 +52,12 @@ steps:
     args:
       [
         "install",
-        "-r",
-        "yolov8_training/training_pipeline_compiler/requirements.txt",
         "--user",
+        "--no-cache-dir",
+        "--upgrade",
+        "kfp>2",
+        "google-cloud-pipeline-components>2",
+        "google-cloud-aiplatform",
       ]
 
   # Compile pipeline
