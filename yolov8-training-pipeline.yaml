@@ -1,0 +1,119 @@
+# PIPELINE DEFINITION
+# Name: dual-component-pipeline
+# Inputs:
+#    data_bucket: str
+#    data_file_name: str
+#    model_repo: str
+#    project_id: str
+components:
+  comp-downloading:
+    executorLabel: exec-downloading
+    inputDefinitions:
+      parameters:
+        data_file_name:
+          parameterType: STRING
+        data_repo:
+          parameterType: STRING
+        project_id:
+          parameterType: STRING
+    outputDefinitions:
+      artifacts:
+        dataset_path:
+          artifactType:
+            schemaTitle: system.Artifact
+            schemaVersion: 0.0.1
+  comp-training:
+    executorLabel: exec-training
+    inputDefinitions:
+      artifacts:
+        dataset_path:
+          artifactType:
+            schemaTitle: system.Artifact
+            schemaVersion: 0.0.1
+      parameters:
+        model_repo:
+          parameterType: STRING
+        project_id:
+          parameterType: STRING
+deploymentSpec:
+  executors:
+    exec-downloading:
+      container:
+        args:
+        - --project_id
+        - '{{$.inputs.parameters[''project_id'']}}'
+        - --data_bucket
+        - '{{$.inputs.parameters[''data_repo'']}}'
+        - --file_name
+        - '{{$.inputs.parameters[''data_file_name'']}}'
+        - --dataset_path
+        - '{{$.outputs.artifacts[''dataset_path''].path}}'
+        command:
+        - python3
+        - /pipelines/component/src/component.py
+        image: europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8_downloader:release-0.1.5
+    exec-training:
+      container:
+        args:
+        - --project_id
+        - '{{$.inputs.parameters[''project_id'']}}'
+        - --dataset_path
+        - '{{$.inputs.artifacts[''dataset_path''].path}}'
+        - --model_repo
+        - '{{$.inputs.parameters[''model_repo'']}}'
+        command:
+        - python3
+        - /pipelines/component/src/component.py
+        image: europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8_trainer:release-0.1.5
+pipelineInfo:
+  name: dual-component-pipeline
+root:
+  dag:
+    tasks:
+      downloading:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-downloading
+        inputs:
+          parameters:
+            data_file_name:
+              componentInputParameter: data_file_name
+            data_repo:
+              componentInputParameter: data_bucket
+            project_id:
+              componentInputParameter: project_id
+        taskInfo:
+          name: downloading
+      training:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-training
+        dependentTasks:
+        - downloading
+        inputs:
+          artifacts:
+            dataset_path:
+              taskOutputArtifact:
+                outputArtifactKey: dataset_path
+                producerTask: downloading
+          parameters:
+            model_repo:
+              componentInputParameter: model_repo
+            project_id:
+              componentInputParameter: project_id
+        taskInfo:
+          name: training
+  inputDefinitions:
+    parameters:
+      data_bucket:
+        parameterType: STRING
+      data_file_name:
+        parameterType: STRING
+      model_repo:
+        parameterType: STRING
+      project_id:
+        parameterType: STRING
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.3.0
