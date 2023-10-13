@@ -10,9 +10,6 @@ services:
     restart: always
     volumes:
       - ./:/app
-      - ../datasets:/app/datasets
-    ports:
-      - "5000:5000"
     deploy:
       resources:
         reservations:

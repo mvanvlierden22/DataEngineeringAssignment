@@ -1,9 +1,10 @@
-from ultralytics import YOLO
+from ultralytics import YOLO, settings
 import argparse
 from google.cloud import storage
 import shutil
 import os
 import zipfile
+import sys
 
 
 def train_yolo(project_id, dataset_path, model_repo):
@@ -14,8 +15,13 @@ def train_yolo(project_id, dataset_path, model_repo):
 
     print([x[0] for x in os.walk("./")])
 
-    dataset_path = dataset_path + "/data.yaml"
-    model.train(data=dataset_path, epochs=50, name="yolov8n_custom")
+    dataset_folder = "./obj_det_dataset"
+
+    # Make sure yolo knows where to find dataset
+    settings.update({"datasets_dir": dataset_folder})
+
+    yaml = f"./{dataset_folder}/data.yaml"
+    model.train(data=yaml, epochs=3, name="yolov8n_custom")
 
     local_file = "runs/detect/yolov8n_custom/weights/best.pt"
     # Save to GCS
