@@ -46,41 +46,6 @@ steps:
         "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_downloader:${TAG_NAME}",
       ]
 
-  # Install dependencies
-  - name: python
-    entrypoint: pip
-    args:
-      [
-        "install",
-        "--user",
-        "--no-cache-dir",
-        "--upgrade",
-        "kfp==2.0",
-        "google-cloud-pipeline-components==2.0",
-        "google-cloud-aiplatform",
-      ]
-
-  # Compile pipeline
-  - name: "python"
-    entrypoint: "python"
-    args: ["yolov8_training/training_pipeline_compiler/pipeline.py"]
-    id: "compile"
-    env:
-      - "LOCATION=$LOCATION"
-      - "PROJECT_ID=$PROJECT_ID"
-      - "TAG_NAME=$TAG_NAME"
-
-  # Upload compiled pipeline to GCS.
-  - name: "gcr.io/cloud-builders/gsutil"
-    args:
-      [
-        "cp",
-        "yolov8_training/training_pipeline_compiler/yolov8-training-pipeline.yaml",
-        "gs://tmp_data_engineering_assignment_group_7",
-      ]
-    id: "upload"
-    waitFor: ["compile"]
-
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
     args:
