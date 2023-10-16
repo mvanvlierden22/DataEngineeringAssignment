@@ -70,7 +70,7 @@ def training(project_id: str, dataset_path: Input[Artifact], model_repo: str):
 
 # Define the workflow of the pipeline.
 @kfp.dsl.pipeline(
-    name="dual-component-pipeline",
+    name="yolov8-training-pipeline",
     description="A dual component pipeline",
     pipeline_root=PIPELINE_ROOT,
 )
@@ -88,8 +88,26 @@ def pipeline(project_id: str, data_bucket: str, model_repo: str, data_file_name:
     )
 
 
+def list_all_files():
+    path = "./"
+
+    # We shall store all the file names in this list
+    filelist = []
+
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            # append the file name to the list
+            filelist.append(os.path.join(root, file))
+
+    # Print all the file names
+    for name in filelist:
+        logging.info(name)
+
+
 if __name__ == "__main__":
     logging.info("Compiling pipeline...")
     compiler.Compiler().compile(
         pipeline_func=pipeline, package_path="yolov8-training-pipeline.yaml"
     )
+    logging.info("Pipeline compiled!")
+    list_all_files()
