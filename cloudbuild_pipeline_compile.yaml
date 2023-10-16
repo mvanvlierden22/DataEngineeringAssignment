@@ -17,6 +17,10 @@ steps:
         "google-cloud-aiplatform",
       ]
 
+  - name: ubuntu
+    entrypoint: "bash"
+    args: ["ls"]
+
   # Compile pipeline
   - name: "python:3.10"
     entrypoint: "python"
