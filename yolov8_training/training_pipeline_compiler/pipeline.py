@@ -107,7 +107,7 @@ def list_all_files():
 if __name__ == "__main__":
     logging.info("Compiling pipeline...")
     compiler.Compiler().compile(
-        pipeline_func=pipeline, package_path="yolov8-training-pipeline-1.yaml"
+        pipeline_func=pipeline, package_path="yolov8-training-pipeline.yaml"
     )
     logging.info("Pipeline compiled!")
     list_all_files()
