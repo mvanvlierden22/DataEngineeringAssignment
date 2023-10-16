@@ -31,6 +31,6 @@ steps:
     args:
       [
         "cp",
-        "yolov8_training/training_pipeline_compiler/yolov8-training-pipeline.yaml",
+        "yolov8-training-pipeline.yaml",
         "gs://tmp_data_engineering_assignment_group_7",
       ]
