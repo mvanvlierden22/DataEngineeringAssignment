@@ -18,9 +18,8 @@ def train_yolo(project_id, dataset_path, model_repo):
 
     dataset_folder = "obj_det_dataset"
 
-    dataset_dir = f"{os.getcwd()}/{dataset_folder}"
     # Make sure yolo knows where to find dataset
-    settings.update({"datasets_dir": dataset_dir})
+    settings.update({"datasets_dir": "null"})
 
     yaml = f"{dataset_folder}/data.yaml"
     model.train(data=yaml, epochs=3, name="yolov8n_custom")
