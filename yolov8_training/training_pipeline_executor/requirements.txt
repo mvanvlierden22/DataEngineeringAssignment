@@ -1,2 +1,2 @@
-google-cloud-aiplatform
+google-cloud-aiplatform[pipelines]
 argparse
