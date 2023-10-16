@@ -1,0 +1,6 @@
+{
+    "project_id": "data-engineering-assignment-1",
+    "data_bucket": "data_repo2023",
+    "model_repo": "model_repo2023",
+    "data_file_name": "obj_det_dataset.zip"
+}
