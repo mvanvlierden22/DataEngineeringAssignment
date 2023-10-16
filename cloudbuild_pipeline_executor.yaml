@@ -7,3 +7,6 @@ steps:
         "--pipeline_root=gs://tmp_data_engineering_assignment_group_7",
         "--parameter_dict=./parameters.json",
       ]
+    env:
+      - "REGION=$LOCATION"
+      - "PROJECT_ID=$PROJECT_ID"

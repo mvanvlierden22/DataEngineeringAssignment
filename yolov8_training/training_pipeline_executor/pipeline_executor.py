@@ -2,8 +2,12 @@ import argparse
 import json
 import logging
 import sys
+import os
 
 import google.cloud.aiplatform as aip
+
+PROJECT_ID = os.getenv("PROJECT_ID")
+REGION = os.getenv("REGION")
 
 
 def run_pipeline_job(name, pipeline_def, pipeline_root, parameter_dict):
@@ -12,6 +16,11 @@ def run_pipeline_job(name, pipeline_def, pipeline_root, parameter_dict):
     data = json.load(f)
     print(data)
     logging.info(data)
+
+    aip.init(
+        project=PROJECT_ID,
+        location=REGION,
+    )
     job = aip.PipelineJob(
         display_name=name,
         enable_caching=False,
