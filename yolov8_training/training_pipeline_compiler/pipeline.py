@@ -17,6 +17,9 @@ from kfp.dsl import (
     InputPath,
 )
 import os
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 # The Google Cloud project that this pipeline runs in.
 PROJECT_ID = "data-engineering-assignment-1"
@@ -86,6 +89,7 @@ def pipeline(project_id: str, data_bucket: str, model_repo: str, data_file_name:
 
 
 if __name__ == "__main__":
+    logging.info("Compiling pipeline...")
     compiler.Compiler().compile(
         pipeline_func=pipeline, package_path="yolov8-training-pipeline.yaml"
     )
