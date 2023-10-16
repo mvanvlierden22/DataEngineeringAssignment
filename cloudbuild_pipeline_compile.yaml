@@ -4,7 +4,7 @@ steps:
     args: ["--version"]
 
   # Install dependencies
-  - name: python
+  - name: "python:3.10"
     entrypoint: pip
     args:
       [
@@ -18,7 +18,7 @@ steps:
       ]
 
   # Compile pipeline
-  - name: "python"
+  - name: "python:3.10"
     entrypoint: "python"
     args: ["yolov8_training/training_pipeline_compiler/pipeline.py"]
     id: "compile"
