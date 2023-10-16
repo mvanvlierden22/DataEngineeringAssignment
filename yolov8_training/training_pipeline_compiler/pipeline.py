@@ -71,7 +71,7 @@ def training(project_id: str, dataset_path: Input[Artifact], model_repo: str):
 # Define the workflow of the pipeline.
 @kfp.dsl.pipeline(
     name="yolov8-training-pipeline",
-    description="A dual component pipeline",
+    description="A yolov8 training pipeline",
     pipeline_root=PIPELINE_ROOT,
 )
 def pipeline(project_id: str, data_bucket: str, model_repo: str, data_file_name: str):
