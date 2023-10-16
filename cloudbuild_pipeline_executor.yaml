@@ -1,4 +1,13 @@
 steps:
+  # Download compiled pipeline from GCS.
+  - name: "gcr.io/cloud-builders/gsutil"
+    args:
+      [
+        "cp",
+        "gs://tmp_data_engineering_assignment_group_7/yolov8-training-pipeline.yaml",
+        ".",
+      ]
+
   - name: "${LOCATION}-docker.pkg.dev/$PROJECT_ID/docker-image-repo/pipeline-executor:${TAG_NAME}"
     args:
       [
