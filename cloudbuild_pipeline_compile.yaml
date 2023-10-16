@@ -21,7 +21,6 @@ steps:
   - name: "python:3.10"
     entrypoint: "python"
     args: ["yolov8_training/training_pipeline_compiler/pipeline.py"]
-    id: "compile"
     env:
       - "LOCATION=$LOCATION"
       - "PROJECT_ID=$PROJECT_ID"
@@ -35,5 +34,3 @@ steps:
         "yolov8_training/training_pipeline_compiler/yolov8-training-pipeline.yaml",
         "gs://tmp_data_engineering_assignment_group_7",
       ]
-    id: "upload"
-    waitFor: ["compile"]
