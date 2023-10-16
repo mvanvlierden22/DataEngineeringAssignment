@@ -55,8 +55,8 @@ steps:
         "--user",
         "--no-cache-dir",
         "--upgrade",
-        "kfp>2",
-        "google-cloud-pipeline-components>2",
+        "kfp==2.0",
+        "google-cloud-pipeline-components==2.0",
         "google-cloud-aiplatform",
       ]
 
