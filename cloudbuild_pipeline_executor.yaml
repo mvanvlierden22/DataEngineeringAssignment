@@ -1,5 +1,5 @@
 steps:
-  - name: "${LOCATION}-docker.pkg.dev/$PROJECT_ID/docker-image-repo/pipeline-executor"
+  - name: "${LOCATION}-docker.pkg.dev/$PROJECT_ID/docker-image-repo/pipeline-executor:${TAG_NAME}"
     args:
       [
         "--name=yolov8-training-pipeline",
