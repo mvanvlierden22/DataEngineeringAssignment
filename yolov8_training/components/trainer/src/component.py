@@ -22,7 +22,7 @@ def train_yolo(project_id, dataset_path, model_repo):
     settings.update({"datasets_dir": "null"})
 
     yaml = f"{dataset_folder}/data.yaml"
-    model.train(data=yaml, epochs=3, name="yolov8n_custom")
+    model.train(data=yaml, epochs=1, name="yolov8n_custom", device="cpu")
 
     local_file = "runs/detect/yolov8n_custom/weights/best.pt"
     # Save to GCS
