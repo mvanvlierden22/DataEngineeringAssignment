@@ -5,7 +5,7 @@ steps:
         "build",
         "-t",
         "${LOCATION}-docker.pkg.dev/$PROJECT_ID/docker-image-repo/pipeline-executor:${TAG_NAME}",
-        "../yolov8_training/training_pipeline_executor",
+        "./yolov8_training/training_pipeline_executor",
       ]
   - name: gcr.io/cloud-builders/docker
     args:
