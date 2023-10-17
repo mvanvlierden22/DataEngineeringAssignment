@@ -1,7 +1,7 @@
 #cloudbuild.yaml
 steps:
   - name: "gcr.io/cloud-builders/docker"
-    args: ["compose", "-f", "yolov8_api/docker-compose.yml", "build"]
+    args: ["compose", "-f", "../yolov8_api/docker-compose.yml", "build"]
     env:
       - "LOCATION=$LOCATION"
       - "PROJECT_ID=$PROJECT_ID"
@@ -13,7 +13,7 @@ steps:
         "build",
         "-t",
         "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_trainer:${TAG_NAME}",
-        "./yolov8_training/components/trainer",
+        "../yolov8_training/components/trainer",
       ]
 
   - name: "gcr.io/cloud-builders/docker"
@@ -22,11 +22,11 @@ steps:
         "build",
         "-t",
         "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_downloader:${TAG_NAME}",
-        "./yolov8_training/components/downloader",
+        "../yolov8_training/components/downloader",
       ]
 
   - name: "gcr.io/cloud-builders/docker"
-    args: ["compose", "-f", "yolov8_api/docker-compose.yml", "push"]
+    args: ["compose", "-f", "../yolov8_api/docker-compose.yml", "push"]
     env:
       - "LOCATION=$LOCATION"
       - "PROJECT_ID=$PROJECT_ID"

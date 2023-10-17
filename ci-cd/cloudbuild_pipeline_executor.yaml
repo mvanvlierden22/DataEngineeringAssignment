@@ -12,9 +12,9 @@ steps:
     args:
       [
         "--name=yolov8-training-pipeline",
-        "--pipeline_def=./yolov8-training-pipeline.yaml",
+        "--pipeline_def=../yolov8-training-pipeline.yaml",
         "--pipeline_root=gs://tmp_data_engineering_assignment_group_7",
-        "--parameter_dict=./parameters.json",
+        "--parameter_dict=../parameters.json",
       ]
     env:
       - "REGION=$LOCATION"
