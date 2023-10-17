@@ -20,7 +20,7 @@ steps:
   # Compile pipeline
   - name: "python:3.10"
     entrypoint: "python"
-    args: ["yolov8_training/training_pipeline_compiler/pipeline.py"]
+    args: ["../yolov8_training/training_pipeline_compiler/pipeline.py"]
     env:
       - "LOCATION=$LOCATION"
       - "PROJECT_ID=$PROJECT_ID"
