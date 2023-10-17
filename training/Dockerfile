@@ -9,4 +9,6 @@ RUN apt-get install ffmpeg libsm6 libxext6 curl -y
 RUN mkdir /app
 WORKDIR /app
 
+ADD settings.yaml /root/.config/Ultralytics/settings.yaml
+
 CMD ["python3", "training.py"]
