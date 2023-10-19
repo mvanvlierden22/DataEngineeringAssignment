@@ -53,6 +53,7 @@ steps:
       sed -i s@%API%@${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}@g ci-cd/service.yaml
       sed -i s@%API_URL%@${API_URL}@g ci-cd/service.yaml
       sed -i s@%POTREE_API_TOKEN%@${POTREE_API_TOKEN}@g ci-cd/service.yaml
+    automapSubstitutions: true
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
