@@ -22,9 +22,9 @@ spec:
               memory: 8Gi
           env:
             - name: POTREE_API_TOKEN
-              value: ${_POTREE_API_TOKEN}
+              value: ${POTREE_API_TOKEN}
             - name: API_URL
-              value: ${_API_URL}
+              value: ${API_URL}
         - image: "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}"
           resources:
             limits:
@@ -32,4 +32,4 @@ spec:
               memory: 8Gi
           env:
             - name: POTREE_API_TOKEN
-              value: ${_POTREE_API_TOKEN}
+              value: ${POTREE_API_TOKEN}
