@@ -1,5 +1,0 @@
-flask
-requests
-cv2
-base64
-json

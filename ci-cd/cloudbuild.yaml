@@ -1,7 +1,7 @@
 #cloudbuild.yaml
 steps:
   - name: "gcr.io/cloud-builders/docker"
-    args: ["compose", "-f", "yolov8_api/docker-compose.yml", "build"]
+    args: ["compose", "-f", "app/docker-compose.yml", "build"]
     env:
       - "LOCATION=$LOCATION"
       - "PROJECT_ID=$PROJECT_ID"
@@ -48,25 +48,4 @@ steps:
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
-    args:
-      [
-        "run",
-        "deploy",
-        "api",
-        "--image",
-        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}",
-        "--region",
-        "europe-west1",
-        "--platform",
-        "managed",
-        "--port",
-        "5000",
-        "--cpu",
-        "2",
-        "--memory",
-        "4G",
-        "--allow-unauthenticated",
-        "--update-env-vars",
-        "PROJECT_ID=$PROJECT_ID,MODEL_REPO=models_de2023,MODEL_NAME=model.h5,POTREE_API_TOKEN=${_POTREE_API_TOKEN}",
-        "--no-cpu-throttling",
-      ]
+    args: ["run", "services", "replace", "ci-cd/service.yaml"]
