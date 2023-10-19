@@ -13,7 +13,7 @@ spec:
         run.googleapis.com/execution-environment: gen1 #or gen2
     spec:
       containers:
-        - image: ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}
+        - image: "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}"
           ports:
             - containerPort: 8000
           resources:
