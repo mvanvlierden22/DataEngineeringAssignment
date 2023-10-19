@@ -13,7 +13,7 @@ spec:
         run.googleapis.com/execution-environment: gen2
     spec:
       containers:
-        - image: "europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/prediction-ui:release-0.4.2"
+        - image: "%PREDICTION%"
           ports:
             - containerPort: 8000
           resources:
@@ -22,14 +22,14 @@ spec:
               memory: 8Gi
           env:
             - name: POTREE_API_TOKEN
-              value: ${POTREE_API_TOKEN}
+              value: "%POTREE_API_TOKEN%"
             - name: API_URL
-              value: ${API_URL}
-        - image: "europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-image:release-0.4.2"
+              value: "%API_URL%"
+        - image: "%API%"
           resources:
             limits:
               cpu: 4000m
               memory: 8Gi
           env:
             - name: POTREE_API_TOKEN
-              value: ${POTREE_API_TOKEN}
+              value: "%POTREE_API_TOKEN%"

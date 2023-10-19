@@ -46,6 +46,14 @@ steps:
         "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_downloader:${TAG_NAME}",
       ]
 
+  - name: "bash"
+    script: |
+      #!/usr/bin/env bash
+      sed -i s@%PREDICTION%@${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}@g ci-cd/service.yaml
+      sed -i s@%API%@${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}@g ci-cd/service.yaml
+      sed -i s@%API_URL%@${API_URL}@g ci-cd/service.yaml
+      sed -i s@%POTREE_API_TOKEN%@${POTREE_API_TOKEN}@g ci-cd/service.yaml
+
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
     args: ["run", "services", "replace", "ci-cd/service.yaml"]
