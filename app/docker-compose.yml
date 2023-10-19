@@ -4,7 +4,7 @@ services:
   api:
     image: "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}"
     build:
-      context: .
+      context: ./yolov8_api
       dockerfile: Dockerfile
     shm_size: '8gb'
     restart: always
@@ -21,7 +21,17 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-
+  ui:
+    image: "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}"
+    build:
+      context: ./prediction-ui
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      POTREE_API_TOKEN: ${POTREE_API_TOKEN}
+      API_URL: ${API_URL}
 
 volumes:
   api-volume:
