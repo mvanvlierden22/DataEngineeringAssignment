@@ -5,7 +5,7 @@ metadata:
     run.googleapis.com/launch-stage: BETA
   labels:
     cloud.googleapis.com/location: europe-west1
-  name: MLOps-app
+  name: app
 spec:
   template:
     metadata:
