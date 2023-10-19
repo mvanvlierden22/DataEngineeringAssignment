@@ -49,3 +49,9 @@ steps:
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
     args: ["run", "services", "replace", "ci-cd/service.yaml"]
+    env:
+      - "LOCATION=$LOCATION"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "TAG_NAME=$TAG_NAME"
+      - "POTREE_API_TOKEN=$_POTREE_API_TOKEN"
+      - "API_URL=$_API_URL"
