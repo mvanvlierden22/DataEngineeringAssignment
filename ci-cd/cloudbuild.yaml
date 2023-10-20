@@ -48,4 +48,4 @@ steps:
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
-    args: ["run", "services", "replace", "service.yaml"]
+    args: ["run", "services", "replace", "ci-cd/service.yaml"]
