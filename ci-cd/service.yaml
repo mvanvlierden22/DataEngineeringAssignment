@@ -10,10 +10,10 @@ spec:
   template:
     metadata:
       annotations:
-        run.googleapis.com/execution-environment: gen1 #or gen2
+        run.googleapis.com/execution-environment: gen2
     spec:
       containers:
-        - image: "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}"
+        - image: "europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/prediction-ui:release-0.4.0"
           ports:
             - containerPort: 8000
           resources:
@@ -25,7 +25,7 @@ spec:
               value: ${POTREE_API_TOKEN}
             - name: API_URL
               value: ${API_URL}
-        - image: "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}"
+        - image: "europe-west1-docker.pkg.dev/data-engineering-assignment-1/docker-image-repo/yolov8-image:release-0.4.0"
           resources:
             limits:
               cpu: 4000m
