@@ -11,10 +11,11 @@ spec:
     metadata:
       annotations:
         run.googleapis.com/execution-environment: gen2
-        run.googleapis.com/container-dependencies: '{"prediction-ui":["yolov8_api"]}'
+        run.googleapis.com/container-dependencies: '{"app":["api"]}'
     spec:
       containers:
         - image: "%PREDICTION%"
+          name: app
           ports:
             - containerPort: 8000
           resources:
@@ -27,6 +28,7 @@ spec:
             - name: API_URL
               value: "%API_URL%"
         - image: "%API%"
+          name: api
           resources:
             limits:
               cpu: 4000m
