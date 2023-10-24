@@ -11,6 +11,7 @@ spec:
     metadata:
       annotations:
         run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/container-dependencies: '{"prediction-ui":["yolov8_api"]}'
     spec:
       containers:
         - image: "%PREDICTION%"
