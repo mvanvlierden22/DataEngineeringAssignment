@@ -55,6 +55,14 @@ steps:
       sed -i s@%POTREE_API_TOKEN%@${POTREE_API_TOKEN}@g ci-cd/service.yaml
     automapSubstitutions: true
 
+  - name: "bash"
+    script: |
+      #!/usr/bin/env bash
+      cat ci-cd/service.yaml
+
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
     args: ["run", "services", "replace", "ci-cd/service.yaml"]
+
+options:
+  automapSubstitutions: true
