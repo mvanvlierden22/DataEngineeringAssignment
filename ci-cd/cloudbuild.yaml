@@ -49,8 +49,8 @@ steps:
   - name: "bash"
     script: |
       #!/usr/bin/env bash
-      sed -i s@%PREDICTION%@${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}@g ci-cd/service.yaml
-      sed -i s@%API%@${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}@g ci-cd/service.yaml
+      sed -i s@%PREDICTION%@${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}@g ci-cd/service.yaml
+      sed -i s@%API%@${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}@g ci-cd/service.yaml
       sed -i s@%API_URL%@${_API_URL}@g ci-cd/service.yaml
       sed -i s@%POTREE_API_TOKEN%@${_POTREE_API_TOKEN}@g ci-cd/service.yaml
     automapSubstitutions: true
