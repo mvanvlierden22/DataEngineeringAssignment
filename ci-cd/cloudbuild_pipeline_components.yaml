@@ -1,0 +1,32 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_trainer:${TAG_NAME}",
+        "./yolov8_training/components/trainer",
+      ]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_downloader:${TAG_NAME}",
+        "./yolov8_training/components/downloader",
+      ]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_trainer:${TAG_NAME}",
+      ]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_downloader:${TAG_NAME}",
+      ]
