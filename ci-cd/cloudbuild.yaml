@@ -1,7 +1,26 @@
 #cloudbuild.yaml
 steps:
   - name: "gcr.io/cloud-builders/docker"
-    args: ["compose", "-f", "app/docker-compose.yml", "build"]
+    args:
+      [
+        "build",
+        "-t",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}",
+        "./app/yolov8_api",
+      ]
+    env:
+      - "LOCATION=$LOCATION"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "TAG_NAME=$TAG_NAME"
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}",
+        "./app/prediction-ui",
+      ]
     env:
       - "LOCATION=$LOCATION"
       - "PROJECT_ID=$PROJECT_ID"
@@ -26,11 +45,18 @@ steps:
       ]
 
   - name: "gcr.io/cloud-builders/docker"
-    args: ["compose", "-f", "app/docker-compose.yml", "push"]
-    env:
-      - "LOCATION=$LOCATION"
-      - "PROJECT_ID=$PROJECT_ID"
-      - "TAG_NAME=$TAG_NAME"
+    args:
+      [
+        "push",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}",
+      ]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}",
+      ]
 
   - name: "gcr.io/cloud-builders/docker"
     args:
@@ -46,23 +72,60 @@ steps:
         "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8_downloader:${TAG_NAME}",
       ]
 
-  - name: "bash"
-    script: |
-      #!/usr/bin/env bash
-      sed -i s@%PREDICTION%@${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME}@g ci-cd/service.yaml
-      sed -i s@%API%@${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}@g ci-cd/service.yaml
-      sed -i s@%API_URL%@${_API_URL}@g ci-cd/service.yaml
-      sed -i s@%POTREE_API_TOKEN%@${_POTREE_API_TOKEN}@g ci-cd/service.yaml
-    automapSubstitutions: true
-
-  - name: "bash"
-    script: |
-      #!/usr/bin/env bash
-      cat ci-cd/service.yaml
-
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
-    args: ["run", "services", "replace", "ci-cd/service.yaml"]
+    args:
+      [
+        "run",
+        "deploy",
+        "api",
+        "--image",
+        "${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/yolov8-image:${TAG_NAME}",
+        "--region",
+        "europe-west1",
+        "--platform",
+        "managed",
+        "--port",
+        "5000",
+        "--cpu",
+        "2",
+        "--memory",
+        "4G",
+        "--allow-unauthenticated",
+        "--update-env-vars",
+        "PROJECT_ID=$PROJECT_ID,MODEL_REPO=models_de2023,MODEL_NAME=model.h5,POTREE_API_TOKEN=${_POTREE_API_TOKEN}",
+      ]
+    id: "api-deployment"
 
-options:
-  automapSubstitutions: true
+  - name: "ubuntu"
+    args: ["sleep", "60"]
+    waitFor:
+      - "api-deployment"
+    id: "sleep"
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "/bin/sh"
+    args:
+      [
+        "-c",
+        "gcloud run services list --platform managed | grep  https: | head -1 | awk '{print $4}' > /workspace/api_url.text",
+      ]
+    waitFor:
+      - "sleep"
+    id: "api-url-extraction"
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "/bin/sh"
+    args:
+      [
+        "-c",
+        "gcloud run deploy prediction-ui --image ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/docker-image-repo/prediction-ui:${TAG_NAME} --set-env-vars API_URL=$(cat /workspace/api_url.text),POTREE_API_TOKEN=${_POTREE_API_TOKEN} --region europe-west1 --platform managed --port 8000 --cpu 2 --memory 4G --allow-unauthenticated",
+      ]
+    waitFor:
+      - "api-url-extraction"
+
+artifacts:
+  objects:
+    location: "gs://YOUR_TEMP_REPO/"
+    paths:
+      - "/workspace/api_url.text"
