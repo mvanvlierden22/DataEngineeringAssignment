@@ -29,8 +29,6 @@ spec:
               value: "%API_URL%"
         - image: "%API%"
           name: api
-          ports:
-            - containerPort: 5000
           resources:
             limits:
               cpu: 4000m
